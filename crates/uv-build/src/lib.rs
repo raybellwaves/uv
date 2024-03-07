@@ -540,7 +540,6 @@ impl SourceBuild {
         // Some packages (such as tqdm 4.66.1) list only extra requires that have already been part of
         // the pyproject.toml requires (in this case, `wheel`). We can skip doing the whole resolution
         // and installation again.
-        // TODO(konstin): Do we still need this when we have a fast resolver?
         if extra_requires
             .iter()
             .any(|req| !pep517_backend.requirements.contains(req))
