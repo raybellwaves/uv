@@ -133,24 +133,19 @@ def main(scenarios: list[Path], snapshot_update: bool = True):
             else []
         )
 
-    # TEMPORARY
-    # We do not yet support local version identifiers
+    # We don't yet support local versions that aren't expressed as direct dependencies.
     for scenario in data["scenarios"]:
         expected = scenario["expected"]
         if scenario["name"] in (
             "local-less-than-or-equal",
             "local-simple",
             "local-transitive-confounding",
-            "local-transitive-backtrack",
-            "local-used-with-sdist",
             "local-used-without-sdist",
-            "local-transitive",
-            "local-transitive-less-than-or-equal",
         ):
             expected["satisfiable"] = False
-            expected[
-                "explanation"
-            ] = "We do not have correct behavior for local version identifiers yet"
+            expected["explanation"] = (
+                "We do not have correct behavior for local version identifiers yet"
+            )
         elif scenario["name"] == "local-greater-than":
             expected["satisfiable"] = True
             expected["packages"] = [
@@ -158,23 +153,6 @@ def main(scenarios: list[Path], snapshot_update: bool = True):
                     "name": "local-greater-than-a",
                     "version": "1.2.3+foo",
                     "module_name": "local_greater_than_a",
-                }
-            ]
-            expected["explanation"] = (
-                "We do not have correct behavior for local version identifiers yet"
-            )
-        elif scenario["name"] == "local-transitive-greater-than":
-            expected["satisfiable"] = True
-            expected["packages"] = [
-                {
-                    "name": "local-transitive-greater-than-a",
-                    "version": "1.0.0",
-                    "module_name": "local_transitive_greater_than_a",
-                },
-                {
-                    "name": "local-transitive-greater-than-b",
-                    "version": "2.0.0+foo",
-                    "module_name": "local_transitive_greater_than_b",
                 }
             ]
             expected["explanation"] = (
@@ -200,13 +178,13 @@ def main(scenarios: list[Path], snapshot_update: bool = True):
         ref = "HEAD" if packse_version == "0.0.0" else packse_version
 
         # Add generated metadata
-        data[
-            "generated_from"
-        ] = f"https://github.com/zanieb/packse/tree/{ref}/scenarios"
+        data["generated_from"] = (
+            f"https://github.com/zanieb/packse/tree/{ref}/scenarios"
+        )
         data["generated_with"] = "./scripts/scenarios/sync.sh"
-        data[
-            "vendor_links"
-        ] = f"https://raw.githubusercontent.com/zanieb/packse/{ref}/vendor/links.html"
+        data["vendor_links"] = (
+            f"https://raw.githubusercontent.com/zanieb/packse/{ref}/vendor/links.html"
+        )
 
         data["index_url"] = f"https://astral-sh.github.io/packse/{ref}/simple-html/"
 
