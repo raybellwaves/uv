@@ -45,6 +45,13 @@ jobs:
       - name: "Clippy"
         run: cargo clippy --workspace --all-targets --all-features --locked -- -D warnings
 
+  prettier:
+    name: "Format yaml files"
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: npx prettier --check "**/*.{yaml,yml}"
+
   cargo-test:
     strategy:
       matrix:
